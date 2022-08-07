@@ -35,16 +35,19 @@ type Costo = Number
 costoDeReparacion:: Auto -> Costo
 costoDeReparacion auto
     |   longitudDeLaPatente auto == 7 = 12500
-    |   laPatenteSeEncuentraEntre_DJyNB  $patente auto = calculoPatental auto
+    |   condicionDeLaPatente auto = calculoPatental auto
     |   otherwise = 15000
 
 longitudDeLaPatente :: Auto -> Number
 longitudDeLaPatente auto = length $ patente auto
 
-laPatenteSeEncuentraEntre_DJyNB :: String -> Bool
-laPatenteSeEncuentraEntre_DJyNB ['D','J',_,_,_,_] = True --Formato viejo posee 6 caracteres 
-laPatenteSeEncuentraEntre_DJyNB [_,_,_,_,'N','B'] = True --Formato viejo posee 6 caracteres
-laPatenteSeEncuentraEntre_DJyNB _ = False
+condicionDeLaPatente' :: Auto -> Bool
+condicionDeLaPatente' (Auto ['D','J',_,_,_,_] _ _ _ _) = True --Formato viejo posee 6 caracteres 
+condicionDeLaPatente' (Auto [_,_,_,_,'N','B'] _ _ _ _) = True --Formato viejo posee 6 caracteres
+condicionDeLaPatente' _ = False
+
+condicionDeLaPatente :: Auto -> Bool
+condicionDeLaPatente auto =  patente auto >= "DJ" && patente auto <= "NB" 
 
 calculoPatental :: Auto -> Number
 calculoPatental auto
